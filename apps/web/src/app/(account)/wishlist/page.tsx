@@ -2,7 +2,6 @@
 
 import { useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Heart, Trash2, Share2, ShoppingBag } from 'lucide-react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -157,8 +156,10 @@ export default function WishlistPage() {
   const shareMutation = useMutation({
     mutationFn: () => apiClient.post('/wishlist/share').then((r) => r.data),
     onSuccess: (data) => {
-      navigator.clipboard.writeText(data.shareUrl);
-      alert('Share link copied to clipboard!');
+      if (typeof window !== 'undefined') {
+        navigator.clipboard.writeText(data.shareUrl);
+        alert('Share link copied to clipboard!');
+      }
     },
   });
 
