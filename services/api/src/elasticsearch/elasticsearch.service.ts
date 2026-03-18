@@ -142,7 +142,7 @@ export class ElasticsearchService implements OnModuleInit {
       };
     } catch (error) {
       this.logger.error('Elasticsearch search failed', error);
-      return { hits: [], total: 0 };
+      throw error;
     }
   }
 
